@@ -17,7 +17,7 @@ module.exports = {
   },
   plugins: [
     '@typescript-eslint',
-    'jest'
+    // 'jest'
   ],
   rules: {
     'import/prefer-default-export': 'off',
