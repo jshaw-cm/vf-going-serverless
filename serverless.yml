@@ -1,17 +1,54 @@
 service:
-  name: vf-going-serverless
+  name: ${file(package.json):name}
 
 custom:
+  s3Sync:
+    - bucketName: arn:aws:s3:::${self:service}-files-${opt:stage, 'local'}
+      localDir: upload/object.json
+
+
 plugins:
-  # - serverless-webpack
+  - serverless-s3-sync
 
 provider:
   name: aws
-  stage: ${opt:stage}
   runtime: nodejs12.x
-  environment:
-    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:PutItem
+      Resource: "arn:aws:dynamodb:${opt:region, 'us-east-1'}:*:table/${self:service}-db-${opt:stage, 'local'}"
+    - Effect: Allow
+      Action:
+        - s3:GetObject
+      Resource: "arn:aws:s3:::${self:service}-files-${opt:stage, 'local'}"
+
+environment: ${file(config.${self:provider.stage}.json)}
 
 functions:
-  hello:
-    handler: handler.hello
+  writeFile:
+    handler: app/dist/index.handler
+    environment:
+      BUCKET: arn:aws:s3:::${self:service}-files-${opt:stage, 'local'}
+      TABLE: arn:aws:dynamodb:${opt:region, 'us-east-1'}:*:table/${self:service}-db-${opt:stage, 'local'}
+    
+
+resources: # CloudFormation template syntax from here on.
+  Resources:
+    FooTable: 
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:service}-foo-${opt:stage, 'local'}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    FilesBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:service}-files-${opt:stage, 'local'}
