@@ -1,0 +1,17 @@
+service:
+  name: vf-going-serverless
+
+custom:
+plugins:
+  # - serverless-webpack
+
+provider:
+  name: aws
+  stage: ${opt:stage}
+  runtime: nodejs12.x
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+
+functions:
+  hello:
+    handler: handler.hello
