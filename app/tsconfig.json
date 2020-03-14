@@ -1,7 +1,7 @@
 {
   "include": ["src", "types", "test"],
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2018",
     "module": "esnext",
     "lib": ["dom", "esnext"],
     "importHelpers": true,
@@ -20,11 +20,18 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
+    "typeRoots": [
+      "node_modules/@types",
+      "types"
+    ],
+    "types": [
+      "node",
+      "jest"
+    ],
     "baseUrl": "./",
     "paths": {
       "*": ["src/*", "node_modules/*"]
     },
-    "jsx": "react",
     "esModuleInterop": true
   }
 }
