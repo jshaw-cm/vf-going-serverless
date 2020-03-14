@@ -16,7 +16,7 @@
   "peerDependencies": {},
   "husky": {
     "hooks": {
-      "pre-commit": "tsdx lint"
+      "pre-push": "tsdx test && tsdx lint"
     }
   },
   "prettier": {
@@ -30,14 +30,14 @@
   "module": "dist/app.esm.js",
   "devDependencies": {
     "@types/jest": "25.1.4",
-    "@typescript-eslint/eslint-plugin": "2.23.0",
-    "@typescript-eslint/parser": "2.23.0",
-    "eslint": "6.8.0",
-    "eslint-config-airbnb-base": "14.1.0",
-    "eslint-plugin-import": "2.20.1",
     "husky": "4.2.3",
     "tsdx": "0.12.3",
     "tslib": "1.11.1",
     "typescript": "3.8.3"
+  },
+  "dependencies": {
+    "aws-sdk": "2.639.0",
+    "dynamoose": "1.11.1",
+    "uuid": "7.0.2"
   }
 }
