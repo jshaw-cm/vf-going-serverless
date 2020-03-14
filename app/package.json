@@ -19,12 +19,6 @@
       "pre-push": "tsdx test && tsdx lint"
     }
   },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
-  },
   "name": "app",
   "author": "Justin M Shaw",
   "module": "dist/app.esm.js",
@@ -36,6 +30,7 @@
     "typescript": "3.8.3"
   },
   "dependencies": {
+    "@types/uuid": "7.0.0",
     "aws-sdk": "2.639.0",
     "dynamoose": "1.11.1",
     "uuid": "7.0.2"

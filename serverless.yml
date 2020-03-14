@@ -3,25 +3,27 @@ service:
 
 custom:
   s3Sync:
-    - bucketName: arn:aws:s3:::${self:service}-files-${opt:stage, 'local'}
+    - bucketName: arn:aws:s3:::${self:service}-files-${self:provider.stage}
       localDir: upload/object.json
 
 
 plugins:
   - serverless-s3-sync
+  - serverless-offline
 
 provider:
   name: aws
+  stage: ${opt:stage, 'local'}
   runtime: nodejs12.x
   iamRoleStatements:
     - Effect: Allow
       Action:
         - dynamodb:PutItem
-      Resource: "arn:aws:dynamodb:${opt:region, 'us-east-1'}:*:table/${self:service}-db-${opt:stage, 'local'}"
+      Resource: "arn:aws:dynamodb:${opt:region, 'us-east-1'}:*:table/${self:service}-db-${self:provider.stage}"
     - Effect: Allow
       Action:
         - s3:GetObject
-      Resource: "arn:aws:s3:::${self:service}-files-${opt:stage, 'local'}"
+      Resource: "arn:aws:s3:::${self:service}-files-${self:provider.stage}"
 
 environment: ${file(config.${self:provider.stage}.json)}
 
@@ -29,16 +31,15 @@ functions:
   writeFile:
     handler: app/dist/index.handler
     environment:
-      BUCKET: arn:aws:s3:::${self:service}-files-${opt:stage, 'local'}
-      TABLE: arn:aws:dynamodb:${opt:region, 'us-east-1'}:*:table/${self:service}-db-${opt:stage, 'local'}
-    
+      BUCKET: arn:aws:s3:::${self:service}-files-${self:provider.stage}
+      TABLE: arn:aws:dynamodb:${opt:region, 'us-east-1'}:*:table/${self:service}-db-${self:provider.stage}
 
 resources: # CloudFormation template syntax from here on.
   Resources:
     FooTable: 
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: ${self:service}-foo-${opt:stage, 'local'}
+        TableName: ${self:service}-foo-${self:provider.stage}
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
@@ -51,4 +52,4 @@ resources: # CloudFormation template syntax from here on.
     FilesBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: ${self:service}-files-${opt:stage, 'local'}
+        BucketName: ${self:service}-files-${self:provider.stage}
