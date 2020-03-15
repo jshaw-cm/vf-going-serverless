@@ -37,6 +37,7 @@ functions:
     environment:
       BUCKET: arn:aws:s3:::${self:service}-files-${self:provider.stage}
       TABLE: arn:aws:dynamodb:${opt:region, 'us-east-1'}:*:table/${self:service}-db-${self:provider.stage}
+      INVOKE_AFTER_DEPLOY: true
 
 resources: # CloudFormation template syntax from here on.
   Resources:

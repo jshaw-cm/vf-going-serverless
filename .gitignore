@@ -1,3 +1,4 @@
-# package directories
-node_modules
+**/node_modules/
+**/dist/
+**/dist.zip
 .serverless

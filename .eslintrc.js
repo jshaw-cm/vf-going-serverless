@@ -36,6 +36,8 @@ module.exports = {
     // e.g. '@typescript-eslint/explicit-function-return-type': 'off',
     'no-new': 'off',
     'import/prefer-default-export': 'off',
+    'import/no-unresolved': 'off',
+    'import/extensions': 'off',
   },
   settings: {
     'import/extensions': ['.js', '.ts'],

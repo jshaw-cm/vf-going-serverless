@@ -1,24 +1,27 @@
 {
   "name": "vf-going-serverless",
   "version": "1.0.0",
-  "main": "handler.js",
-  "description": "vf-exercise",
+  "description": "",
+  "main": "index.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "sls": "serverless"
   },
-  "dependencies": {
-    "invoke-after-deploy": "file:./plugin/invoke-after-deploy/dist",
-    "serverless-s3-sync": "1.11.0"
-  },
+  "author": "Justin M Shaw",
+  "license": "ISC",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "2.23.0",
     "@typescript-eslint/parser": "2.23.0",
     "eslint": "6.8.0",
     "eslint-config-airbnb-base": "14.1.0",
-    "eslint-plugin-import": "2.20.1",
     "eslint-config-prettier": "6.10.0",
+    "eslint-plugin-import": "2.20.1",
     "eslint-plugin-jest": "23.8.2",
     "eslint-plugin-prettier": "3.1.2",
-    "prettier": "1.19.1"
+    "prettier": "1.19.1",
+    "serverless": "1.66.0",
+    "serverless-s3-sync": "1.11.0",
+    "invoke-after-deploy": "file:./plugin/invoke-after-deploy/dist",
+    "typescript": "3.8.3"
   }
 }

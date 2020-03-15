@@ -1,0 +1,21 @@
+{
+  "name": "invoke-after-deploy",
+  "version": "1.0.0",
+  "description": "Plugin that invokes a lambda after deploy",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "test",
+    "build": "rm -rf dist && tsc && cp -r package*.json dist && cd dist && npm ci --only=production"
+  },
+  "author": "Justin M Shaw",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "2.639.0",
+    "chalk": "3.0.0",
+    "serverless": "1.66.0"
+  },
+  "devDependencies": {
+    "@types/serverless": "1.18.6",
+    "typescript": "3.8.3"
+  }
+}
