@@ -4,9 +4,10 @@
   "main": "handler.js",
   "description": "vf-exercise",
   "scripts": {
-    "serverless": "serverless"
+    "sls": "serverless"
   },
   "dependencies": {
+    "invoke-after-deploy": "file:./plugin/invoke-after-deploy/dist",
     "serverless-s3-sync": "1.11.0"
   },
   "devDependencies": {
@@ -15,8 +16,9 @@
     "eslint": "6.8.0",
     "eslint-config-airbnb-base": "14.1.0",
     "eslint-plugin-import": "2.20.1",
-    "serverless-offline": "6.0.0-alpha.67",
-    "typescript": "3.8.3",
-    "serverless": "1.66.0"
+    "eslint-config-prettier": "6.10.0",
+    "eslint-plugin-jest": "23.8.2",
+    "eslint-plugin-prettier": "3.1.2",
+    "prettier": "1.19.1"
   }
 }
