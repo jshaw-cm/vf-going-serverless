@@ -1,15 +1,19 @@
 service:
   name: ${file(package.json):name}
 
+package:
+  exclude:
+    - plugin/**
+    - node_modules/**
+
 custom:
   s3Sync:
-    - bucketName: arn:aws:s3:::${self:service}-files-${self:provider.stage}
-      localDir: upload/object.json
-
+    - bucketName: ${self:service}-files-${self:provider.stage}
+      localDir: upload
 
 plugins:
   - serverless-s3-sync
-  - serverless-offline
+  - invoke-after-deploy
 
 provider:
   name: aws
