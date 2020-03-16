@@ -1,4 +1,4 @@
-import dynamoose from 'dynamoose';
+import dynamoose from './dynamoose';
 import { fooSchema } from './foo.schema';
 import { FooBarInterface } from './foo.interface';
 
