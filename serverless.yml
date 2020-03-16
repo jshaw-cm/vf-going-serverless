@@ -12,6 +12,7 @@ custom:
       localDir: upload
 
 plugins:
+  - serverless-pseudo-parameters
   - serverless-s3-sync
   - invoke-after-deploy
 
@@ -20,14 +21,14 @@ provider:
   stage: ${opt:stage, 'local'}
   runtime: nodejs12.x
   iamRoleStatements:
-    - Effect: Allow
+    - Effect: 'Allow'
       Action:
         - dynamodb:PutItem
-      Resource: "arn:aws:dynamodb:${opt:region, 'us-east-1'}:*:table/${self:service}-db-${self:provider.stage}"
-    - Effect: Allow
-      Action:
+      Resource: arn:aws:dynamodb:${opt:region, 'us-east-1'}:#{AWS::AccountId}:table/${self:service}-foo-${self:provider.stage}
+    - Effect: 'Allow'
+      Action: 
         - s3:GetObject
-      Resource: "arn:aws:s3:::${self:service}-files-${self:provider.stage}"
+      Resource: arn:aws:s3:::${self:service}-files-${self:provider.stage}*
 
 environment: ${file(config.${self:provider.stage}.json)}
 
@@ -35,9 +36,10 @@ functions:
   writeFile:
     handler: app/dist/index.handler
     environment:
-      BUCKET: arn:aws:s3:::${self:service}-files-${self:provider.stage}
-      TABLE: arn:aws:dynamodb:${opt:region, 'us-east-1'}:*:table/${self:service}-db-${self:provider.stage}
+      BUCKET: ${self:service}-files-${self:provider.stage}
+      TABLE: ${self:service}-foo-${self:provider.stage}
       INVOKE_AFTER_DEPLOY: true
+      OBJECT_KEY: object.json
 
 resources: # CloudFormation template syntax from here on.
   Resources:
@@ -56,5 +58,10 @@ resources: # CloudFormation template syntax from here on.
           WriteCapacityUnits: 1
     FilesBucket:
       Type: AWS::S3::Bucket
+      DeletionPolicy: Delete
       Properties:
         BucketName: ${self:service}-files-${self:provider.stage}
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
