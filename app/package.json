@@ -9,7 +9,11 @@
   },
   "author": "Justin M Shaw",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "@types/pino": "5.17.0",
+    "aws-sdk": "2.639.0",
+    "pino": "5.17.0"
+  },
   "devDependencies": {
     "typescript": "3.8.3"
   }
