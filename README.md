@@ -2,44 +2,73 @@
 
 ## Table of Contents
 
-- [About](#about)
+- [Prerequisites](#prereqs)
 - [Getting Started](#getting_started)
 - [Usage](#usage)
 
-## About <a name = "about"></a>
+This is a serverless application that deploys a Lambda, DynamoDB, and S3 bucket.  Upon deploy, a file will be synced to the S3 bucket, and a custom serverless plugin will invoke the lambda which will read the file from S3 and store the contents of the file in dynamodb.
 
-Write about 1-2 paragraphs describing the purpose of your project.
+## Prerequisites <a name = "prereqs"></a>
+
+- [nodejs](https://nodejs.org/en/)
 
 ## Getting Started <a name = "getting_started"></a>
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
+### Structure
 
-### Prerequisites
+- `vf-going-serverless`: This is the root of the serverless project.
+- `vf-going-serverless/app`: This is the lambda applicatin.
+- `upload`: This directory will be synced to the S3 bucket after the deployment of the serverless application.
+- `vf-going-serverless/plugin/invoke-after-deploy`: This is the plugin for invoking the lambda after the serverless deployment.
+- `.vscode`: Settings for vscode (lint on save). Tasks settings.
 
-What things you need to install the software and how to install them.
+### Testing
 
-```
-Give examples
-```
+- [jest](https://jestjs.io/) is setup for testing.
 
-### Installing
+### Linting
 
-A step by step series of examples that tell you how to get a development env running.
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo.
+- [eslint](https://eslint.org/) is setup for linting typescript.
 
 ## Usage <a name = "usage"></a>
 
-Add notes about how to use the system.
+### Install dependencies
+
+```bash
+$ vf-going-serverless
+npm i
+```
+
+This will install dependencies in:
+
+- `vf-going-serverless` 
+- `vf-going-serverless/app`
+- `vf-going-serverless/plugin/invoke-after-deploy`
+
+### Build
+
+```bash
+$ vf-going-serverless
+npm run build
+```
+
+This will lint and build:
+
+- `vf-going-serverless/app`
+- `vf-going-serverless/plugin/invoke-after-deploy`
+
+### Setup environment
+
+Setup your access key and secret:
+
+```bash
+export AWS_ACCESS_KEY_ID=<your-access-key>
+export AWS_SECRET_ACCESS_KEY=<your-secret>
+```
+
+### Deploy
+
+```bash
+$ vf-going-serverless
+npm run sls -- deploy --stage <stage>
+```
