@@ -1,12 +1,7 @@
-import rawAws from 'aws-sdk';
-import awsXray from 'aws-xray-sdk';
+import AWS from 'aws-sdk';
 import pino from 'pino';
 import { FooModel } from './foo.model';
 import { FooBarInterface } from './foo.interface';
-
-// add xray to AWS object
-const AWS = awsXray.captureAWS(rawAws) as typeof rawAws;
-
 // Setup logger
 const l = pino(
   {
@@ -21,8 +16,7 @@ const l = pino(
   pino.destination(1)
 );
 
-// Add xray to logger
-awsXray.setLogger(l);
+l.info('Logger setup');
 
 /**
  * @function getFile
@@ -30,15 +24,20 @@ awsXray.setLogger(l);
  * @returns {(Promise<FooBarInterface>)}
  * @description get file from s3
  */
-const getFile = async (key: string | undefined): Promise<FooBarInterface> => {
-  const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
+const getFile = async (key: string, bucket: string): Promise<FooBarInterface> => {
+  const s3 = new AWS.S3();
+
   const options: AWS.S3.Types.GetObjectRequest = {
-    Bucket: process.env.BUCKET || 'undefined-bucket',
-    Key: key || 'undefined-key',
+    Bucket: bucket,
+    Key: key,
   };
 
+  // Get file from s3
+  l.info('Getting file from bucket');
   const file = await s3.getObject(options).promise();
   if (!file.Body) throw new Error('Empty file');
+  // return contents of file as FooBarInterface
+  l.info('Return contents of file as FooBarInterface');
   return { ...(JSON.parse(file.Body.toString()) as FooBarInterface) };
 };
 
@@ -50,8 +49,10 @@ const getFile = async (key: string | undefined): Promise<FooBarInterface> => {
  */
 const storeObject = async (object: FooBarInterface): Promise<FooBarInterface> => {
   // create dynamo object
+  l.info({ object }, 'Insert object');
   const res = await FooModel.create(object);
-  if (res.id) l.debug(`Created with id: ${res.id}`);
+  l.info({ res }, 'Response from dynamodb');
+  if (res.id) l.info(`Created with id: ${res.id}`);
   return res;
 };
 /**
@@ -60,13 +61,20 @@ const storeObject = async (object: FooBarInterface): Promise<FooBarInterface> =>
  */
 export const handler = async (): Promise<FooBarInterface> => {
   try {
-    l.debug(process.env);
+    l.info(process.env);
+    l.info({
+      key: process.env.OBJECT_KEY || 'NO-OBJECT-KEY',
+      bucket: process.env.BUCKET || 'NO-BUCKET',
+    });
     /**
      * 1. Get file from s3
      * 2. Store object in file to dynamodb
      * return stored object
      */
-    return await getFile(process.env.OBJECT_KEY).then(storeObject);
+    return await getFile(
+      process.env.OBJECT_KEY || 'undefined-key',
+      process.env.BUCKET || 'undefined-bucket'
+    ).then(storeObject);
   } catch (error) {
     l.warn(error);
     // Return error if it occurs
