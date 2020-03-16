@@ -9,7 +9,10 @@ dynamoose.setDDB({
 
 export const fooSchema = new dynamoose.Schema({
   id: {
-    type: String, required: true, hashKey: true, default: uuid,
+    type: String,
+    required: true,
+    hashKey: true,
+    default: uuid,
   },
   foo: {
     type: String,
