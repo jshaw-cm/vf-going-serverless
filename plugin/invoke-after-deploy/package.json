@@ -4,8 +4,10 @@
   "description": "Plugin that invokes a lambda after deploy",
   "main": "dist/index.js",
   "scripts": {
-    "test": "test",
-    "build": "rm -rf dist && tsc && cp -r package*.json dist && cd dist && npm ci --only=production"
+    "build": "rm -rf dist && tsc && cp -r package*.json dist && cd dist && npm ci --only=production",
+    "test": "jest --testTimeout 100000 --color | pino-pretty",
+    "test:ci": "jest --testTimeout 100000 --ci --runInBand --coverage",
+    "jest": "jest --testTimeout 10000"
   },
   "author": "Justin M Shaw",
   "license": "ISC",
