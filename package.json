@@ -7,7 +7,8 @@
     "sls": "serverless",
     "lint": "tsc -p plugin/invoke-after-deploy --noEmit && tsc -p app --noEmit && eslint '**/*.ts'",
     "test": "(cd app && npm run jest)",
-    "install": "(cd app && npm i) && (cd plugin/invoke-after-deploy && npm i)"
+    "install": "(cd app && npm i) && (cd plugin/invoke-after-deploy && npm i)",
+    "build": "(cd app && npm run build) && (cd plugin/invoke-after-deploy && npm run build)"
   },
   "husky": {
     "hooks": {
@@ -40,5 +41,8 @@
     "**/dist/",
     "**/node_modules/",
     "**/jest.config.js"
-  ]
+  ],
+  "dependencies": {
+    "serverless-pseudo-parameters": "2.5.0"
+  }
 }
