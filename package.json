@@ -31,5 +31,14 @@
     "serverless": "1.66.0",
     "serverless-s3-sync": "1.11.0",
     "typescript": "3.8.3"
-  }
+  },
+  "engines": {
+    "node": "12.x"
+  },
+  "eslintIgnore": [
+    "**/cdk.out/",
+    "**/dist/",
+    "**/node_modules/",
+    "**/jest.config.js"
+  ]
 }
