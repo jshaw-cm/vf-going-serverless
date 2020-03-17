@@ -1,5 +1,5 @@
 service:
-  name: ${file(config.${opt:stage}.json):vars.SERVICE_NAME}
+  name: ${file(config.${opt:stage}.json):SERVICE_NAME}
 
 package:
   exclude:
