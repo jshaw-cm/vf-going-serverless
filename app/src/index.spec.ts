@@ -52,6 +52,4 @@ describe('Foo handler tests', () => {
     const test: FooBarInterface = await getFile('key', 'bucket');
     expect(test).toStrictEqual({ foo: 'bar' });
   });
-
-  it.skip('handles a request', async () => {});
 });
