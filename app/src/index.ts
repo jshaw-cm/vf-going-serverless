@@ -16,7 +16,7 @@ const l = pino(
   pino.destination(1)
 );
 
-l.info('Logger setup');
+l.debug('Logger setup');
 
 /**
  * @function getFile
@@ -33,11 +33,11 @@ export const getFile = async (key: string, bucket: string): Promise<FooBarInterf
   };
 
   // Get file from s3
-  l.info('Getting file from bucket');
+  l.debug('Getting file from bucket');
   const file = await s3.getObject(options).promise();
   if (!file.Body) throw new Error('Empty file');
   // return contents of file as FooBarInterface
-  l.info('Return contents of file as FooBarInterface');
+  l.debug('Return contents of file as FooBarInterface');
   return { ...(JSON.parse(file.Body.toString()) as FooBarInterface) };
 };
 
@@ -49,10 +49,10 @@ export const getFile = async (key: string, bucket: string): Promise<FooBarInterf
  */
 export const storeObject = async (object: FooBarInterface): Promise<FooBarInterface> => {
   // create dynamo object
-  l.info({ object }, 'Insert object');
+  l.debug({ object }, 'Insert object');
   const res = await FooModel.create(object);
-  l.info({ res }, 'Response from dynamodb');
-  if (res.id) l.info(`Created with id: ${res.id}`);
+  l.debug({ res }, 'Response from dynamodb');
+  if (res.id) l.debug(`Created with id: ${res.id}`);
   return res;
 };
 /**
@@ -61,15 +61,12 @@ export const storeObject = async (object: FooBarInterface): Promise<FooBarInterf
  */
 export const handler = async (): Promise<FooBarInterface> => {
   try {
-    l.info(process.env);
-    l.info({
-      key: process.env.OBJECT_KEY || 'NO-OBJECT-KEY',
-      bucket: process.env.BUCKET || 'NO-BUCKET',
-    });
+    l.debug(process.env);
+
     /**
      * 1. Get file from s3
      * 2. Store object in file to dynamodb
-     * return stored object
+     * 3. return stored object
      */
     return await getFile(
       process.env.OBJECT_KEY || 'undefined-key',
