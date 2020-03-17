@@ -1,7 +1,5 @@
 {
-  "vars": {
-    "LOG_LEVEL": "debug",
-    "NODE_ENV": "development",
-    "SERVICE_NAME": "vf-going-serverless"
-  }
+  "LOG_LEVEL": "debug",
+  "NODE_ENV": "development",
+  "SERVICE_NAME": "vf-going-serverless"
 }
