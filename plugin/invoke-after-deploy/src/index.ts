@@ -34,8 +34,6 @@ class InvokeAfterDeploy {
    */
   invoke(): void {
     try {
-      console.log(this.serverless.service.getFunction('writeFile'));
-
       // Pluck service out of this.serverless
       const { service } = this.serverless;
       // Get all functions
