@@ -1,5 +1,11 @@
 # vf-going-serverless
 
+## TLDR
+
+Copy and paste this line.
+
+- `npm i && npm run build && npm run sls -- deploy --stage <stage>`
+
 ## Table of Contents
 
 - [Prerequisites](#prereqs)
