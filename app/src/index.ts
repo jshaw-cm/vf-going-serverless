@@ -24,7 +24,7 @@ l.info('Logger setup');
  * @returns {(Promise<FooBarInterface>)}
  * @description get file from s3
  */
-const getFile = async (key: string, bucket: string): Promise<FooBarInterface> => {
+export const getFile = async (key: string, bucket: string): Promise<FooBarInterface> => {
   const s3 = new AWS.S3();
 
   const options: AWS.S3.Types.GetObjectRequest = {
@@ -47,7 +47,7 @@ const getFile = async (key: string, bucket: string): Promise<FooBarInterface> =>
  * @returns {(Promise<void>)}
  * @description store object in dynamodb
  */
-const storeObject = async (object: FooBarInterface): Promise<FooBarInterface> => {
+export const storeObject = async (object: FooBarInterface): Promise<FooBarInterface> => {
   // create dynamo object
   l.info({ object }, 'Insert object');
   const res = await FooModel.create(object);

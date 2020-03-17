@@ -1,5 +1,5 @@
 service:
-  name: ${file(config.${opt:stage}.json):SERVICE_NAME}
+  name: ${file(config.${opt:stage}.json):vars.SERVICE_NAME}
 
 package:
   exclude:
@@ -20,6 +20,7 @@ provider:
   name: aws
   stage: ${opt:stage, 'local'}
   runtime: nodejs12.x
+  environment: ${file(config.${opt:stage}.json)}
   iamRoleStatements:
     - Effect: 'Allow'
       Action:
@@ -29,8 +30,6 @@ provider:
       Action: 
         - s3:GetObject
       Resource: arn:aws:s3:::${self:service}-files-${self:provider.stage}*
-
-environment: ${file(config.${self:provider.stage}.json)}
 
 functions:
   writeFile:

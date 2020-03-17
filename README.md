@@ -22,14 +22,6 @@ This is a serverless application that deploys a Lambda, DynamoDB, and S3 bucket.
 - `vf-going-serverless/plugin/invoke-after-deploy`: This is the plugin for invoking the lambda after the serverless deployment.
 - `.vscode`: Settings for vscode (lint on save). Tasks settings.
 
-### Testing
-
-- [jest](https://jestjs.io/) is setup for testing.
-
-### Linting
-
-- [eslint](https://eslint.org/) is setup for linting typescript.
-
 ## Usage <a name = "usage"></a>
 
 ### Install dependencies
@@ -72,3 +64,10 @@ export AWS_SECRET_ACCESS_KEY=<your-secret>
 $ vf-going-serverless
 npm run sls -- deploy --stage <stage>
 ```
+
+## Some extra stuff
+
+- [jest](https://jestjs.io/) for unit testing.
+- [eslint](https://eslint.org/) for linting typescript.
+- [husky](https://github.com/typicode/husky) to test and lint before pushing code.
+- [prettier](https://prettier.io/) for formatting code.
