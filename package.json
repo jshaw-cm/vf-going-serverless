@@ -29,7 +29,7 @@
     "husky": "4.2.3",
     "invoke-after-deploy": "file:./plugin/invoke-after-deploy/dist",
     "prettier": "1.19.1",
-    "serverless": "1.66.0",
+    "serverless": "3.25.1",
     "serverless-s3-sync": "1.11.0",
     "typescript": "3.8.3"
   },
