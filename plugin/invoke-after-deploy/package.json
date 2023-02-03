@@ -14,7 +14,7 @@
   "dependencies": {
     "aws-sdk": "2.639.0",
     "chalk": "3.0.0",
-    "serverless": "1.66.0"
+    "serverless": "3.27.0"
   },
   "devDependencies": {
     "@types/serverless": "1.18.6",
